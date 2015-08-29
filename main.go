@@ -39,8 +39,8 @@ func main() {
 }
 
 func loadConfig() {
-	viper.SetConfigName("test")
-	viper.AddConfigPath("$HOME/Codez")
+	viper.SetConfigName("test") // config filename
+	viper.AddConfigPath("$HOME/tmp")
 	viper.SetConfigType("yaml")
 
 	// defaults
