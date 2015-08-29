@@ -7,7 +7,7 @@ import (
 
 // Returns a new Watcher
 func New(url string, checkNow bool) *WebWatcher {
-	watcher := &WebWatcher{Url: url}
+	watcher := &WebWatcher{URL: url}
 	watcher.active = false
 	watcher.StatusCode = -1
 	watcher.Interval = 1 // 1 second default
@@ -20,7 +20,7 @@ func New(url string, checkNow bool) *WebWatcher {
 // the status of the watcher
 type StatusItem struct {
 	StatusCode int
-	Url        string
+	URL        string
 }
 
 func (s StatusItem) IsOk() bool {
@@ -35,7 +35,7 @@ type Watcher interface {
 }
 
 type WebWatcher struct {
-	Url    string
+	URL    string
 	active bool
 	// The status code from the last check
 	// Value -1, indicates the url has not been watched
@@ -71,7 +71,7 @@ func (w *WebWatcher) startWatch() {
 
 	// do the initial check?
 	if w.checkNow {
-		w.doWatchCheck()
+		w.performWatchCheck()
 	}
 
 	// now check every interval
@@ -80,13 +80,13 @@ func (w *WebWatcher) startWatch() {
 	for {
 		time.Sleep(duration)
 
-		w.doWatchCheck()
+		w.performWatchCheck()
 	}
 }
 
 // Performs the actual watch url check, then sends on the chan
-func (w *WebWatcher) doWatchCheck() {
-	w.StatusCode = w.checkUrl()
+func (w *WebWatcher) performWatchCheck() {
+	w.StatusCode = w.checkURL()
 	sItem := w.getStatusItem()
 
 	// send on chan
@@ -94,8 +94,8 @@ func (w *WebWatcher) doWatchCheck() {
 }
 
 // Checks the url, returning the status code from it
-func (w *WebWatcher) checkUrl() int {
-	resp, err := http.Get(w.Url)
+func (w *WebWatcher) checkURL() int {
+	resp, err := http.Get(w.URL)
 	if err != nil {
 		return 0
 	}
@@ -104,7 +104,7 @@ func (w *WebWatcher) checkUrl() int {
 }
 
 func (w WebWatcher) getStatusItem() StatusItem {
-	return StatusItem{StatusCode: w.StatusCode, Url: w.Url}
+	return StatusItem{StatusCode: w.StatusCode, URL: w.URL}
 }
 
 func (w *WebWatcher) Stop() {

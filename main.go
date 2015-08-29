@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/cbess/webwatch/web"
+	"github.com/cbess/gowebwatch/web"
 	"github.com/spf13/viper"
 )
 
@@ -23,8 +23,13 @@ func main() {
 		go func() {
 			watcher.Watch()
 
-			fmt.Println("Watching web...", watcher.Url)
+			fmt.Println("Watching web...", watcher.URL)
 		}()
+	}
+
+	if len(urls) == 0 {
+		fmt.Println("No URLs! Check config.")
+		return
 	}
 
 	// get the chan info
@@ -34,7 +39,7 @@ func main() {
 			msg = "OK"
 		}
 
-		fmt.Println(sItem.Url, " ", sItem.StatusCode, msg)
+		fmt.Println(sItem.URL, " ", sItem.StatusCode, msg)
 	}
 }
 
@@ -44,7 +49,7 @@ func loadConfig() {
 	viper.SetConfigType("yaml")
 
 	// defaults
-	viper.SetDefault("name", "great")
+	viper.SetDefault("name", "No Name")
 
 	viper.ReadInConfig()
 }
