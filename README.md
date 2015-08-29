@@ -18,4 +18,7 @@ Sample Config (yaml) - `test.yml`:
 
 ### Purpose
 
-Created to try out Golang.
+1. Created to try out Golang.
+2. Check the existence of web resources.
+2. Prime web app caches.
+3. Maybe more soon.
