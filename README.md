@@ -7,7 +7,7 @@ This will watch a remote resource at a specified URL, printing the status of it 
 
 This app uses [viper](https://godoc.org/github.com/spf13/viper) for the config. The name and URLs are expected to be set within the config.
 
-Sample Config (yaml) - `test.yml`:
+Sample Config (yaml) - `~/tmp/test.yml`:
 
 ```yaml
   name: Test Name
